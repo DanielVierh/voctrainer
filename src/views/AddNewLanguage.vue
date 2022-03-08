@@ -2,7 +2,7 @@
     <div>
         <h2>Neue Sprache hinzufügen</h2>
         <ErrorMessage v-if="isError" :errorMessage="errorMessage" />
-        <form @submit.prevent="handleAddNewLanguage">
+        <form @submit.prevent="handleAddNewLanguage" >
             <select v-model="choosenLanguage" @click="hideError">
                 <option v-for="language in languagePack" :key="language">
                     {{ language }}
@@ -16,47 +16,56 @@
 <script>
 import Header from '../components/Header.vue';
 import ErrorMessage from '../components/ErrorMessage.vue';
+import {useRouter} from 'vue-router';
+import {ref} from '@vue/reactivity';
 
 export default {
     components: {
         Header,
         ErrorMessage,
     },
-    data() {
-        return {
-            isError: false,
-            errorMessage: '',
-            choosenLanguage: '',
-            languagePack: [
-                'Englisch',
-                'Französisch',
-                'Griechisch',
-                'Italienisch',
-                'Isländisch',
-                'Niederländisch',
-                'Portugiesisch',
-                'Schwedisch',
-                'Spanisch',
-                'Türkisch',
-            ],
-        };
-    },
-    methods: {
-        handleAddNewLanguage() {
-            if (this.choosenLanguage === '') {
-                this.errorMessage = 'Bitte eine Sprache auswählen';
-                this.isError = true;
-            } else {
-                // Todo Sprache wird definiert
-                console.log(`${this.choosenLanguage}`);
-                this.$router.push('/');
-            }
-        },
 
-        hideError() {
-            this.isError = false;
+    setup() {
+        const router = useRouter();
+        const isError = ref(false);
+        const errorMessage = ref('');
+        const choosenLanguage = ref('');
+        const languagePack = [
+            'Englisch',
+            'Französisch',
+            'Griechisch',
+            'Italienisch',
+            'Isländisch',
+            'Niederländisch',
+            'Portugiesisch',
+            'Schwedisch',
+            'Spanisch',
+            'Türkisch',
+        ];
+
+        const handleAddNewLanguage = () => {
+            if (choosenLanguage.value === '') {
+                errorMessage.value = 'Bitte eine Sprache auswählen';
+                isError.value = true;
+            } else {
+                // Todo Sprachpaket abspeichern
+                console.log(`${choosenLanguage.value}`);
+                router.push({name: 'home'});
+            }
+        };
+
+        const hideError = () => {
+            isError.value = false;
         }
 
+        return {
+            languagePack,
+            handleAddNewLanguage,
+            isError,
+            choosenLanguage,
+            errorMessage,
+            hideError
+        };
     },
 };
 </script>
