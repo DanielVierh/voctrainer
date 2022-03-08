@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="home">
+        <nav>
+            <router-link to="/AddNewLanguage">Neue Sprache +</router-link>
+        </nav>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import Header from '../components/Header.vue';
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+    name: 'HomeView',
+    components: {
+        Header,
+    },
+};
 </script>
+
+<style lang="scss">
+nav {
+  padding: 30px;
+    a {
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        background: #2c3e50;
+        padding: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 5px 5px 15px black;
+        border: 2px solid black;
+    }
+}
+</style>
