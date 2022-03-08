@@ -45,7 +45,7 @@ export default {
 
         const handleAddNewLanguage = () => {
             if (choosenLanguage.value === '') {
-                errorMessage.value = 'Bitte eine Sprache auswählen';
+                errorMessage.value = 'Bitte eine Sprache auswählen!';
                 isError.value = true;
             } else {
                 // Todo Sprachpaket abspeichern
