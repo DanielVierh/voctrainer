@@ -11,6 +11,12 @@ const routes = [
     path: '/AddNewLanguage',
     name: 'AddNewLanguage',
     component: () => import(/* webpackChunkName: "AddNewLanguage" */ '../views/AddNewLanguage.vue')
+  },
+  {
+    path: '/LangOverview',
+    name: 'overview',
+    component: () => import(/* webpackChunkName: "AddNewLanguage" */ '../views/LangOverview.vue')
+    // Todo ID übergeben
   }
 ]
 
