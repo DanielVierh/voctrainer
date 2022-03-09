@@ -82,6 +82,7 @@ form {
 select {
     padding: 10px 6px;
     width: 50%;
+    max-width: 170px;
     box-sizing: border-box;
     border: none;
     border-bottom: 1px solid #ddd;
