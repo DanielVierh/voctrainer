@@ -22,6 +22,7 @@ export default {
 <style>
 .menueButton {
     width: 150px;
+    color: black;
     padding: 1rem;
     margin-bottom: 8px;
     border-radius: 15px;

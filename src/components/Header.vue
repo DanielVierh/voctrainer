@@ -16,8 +16,10 @@ export default {
 
 <style>
 .logo{
-    width: 100px;
-    padding: .1rem;
+    content: "";
+    width: 95px;
+    height: 55px;
+    padding:.1rem;
     margin: 8px;
     background: rgb(5, 68, 105);
     font-weight: bold;
@@ -25,6 +27,8 @@ export default {
     font-size: 1.1rem;
     cursor: pointer;
     border-radius: 5px;
-    transform: rotate(-8deg);
+    left: -30px;
+    transform: rotateZ(-6deg);
+    box-shadow: -5px 8px 15px black;
 }
 </style>
