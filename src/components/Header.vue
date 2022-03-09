@@ -1,5 +1,5 @@
 <template>
-    <div class="headArea" @click="gotoHome">
+    <div class="logo" @click="gotoHome">
         <p>Voctrainer</p>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-.headArea{
+.logo{
     width: 100px;
     padding: .1rem;
     margin: 8px;
