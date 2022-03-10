@@ -11,10 +11,10 @@
 <script>
 import {ref} from 'vue';
 export default {
-    props: ['testLanguages'],
+    props: ['outputLangPacks'],
 
     setup(props) {
-        const languages = ref(props.testLanguages);
+        const languages = ref(props.outputLangPacks);
 
         return {languages};
     },

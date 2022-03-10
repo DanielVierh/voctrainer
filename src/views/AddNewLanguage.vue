@@ -2,7 +2,7 @@
     <div>
         <h2>Neue Sprache hinzufügen</h2>
         <ErrorMessage v-if="isError" :errorMessage="errorMessage" />
-        <form @submit.prevent="handleAddNewLanguage" >
+        <form @submit.prevent="handleAddNewLanguage">
             <select v-model="choosenLanguage" @click="hideError">
                 <option v-for="language in languagePack" :key="language">
                     {{ language }}
@@ -18,7 +18,6 @@ import Header from '../components/Header.vue';
 import ErrorMessage from '../components/ErrorMessage.vue';
 import {useRouter} from 'vue-router';
 import {ref} from '@vue/reactivity';
-
 
 export default {
     components: {
@@ -44,20 +43,81 @@ export default {
             'Türkisch',
         ];
 
+        let myLanguages = [];
+        let storedObj = {
+            _myLanguages: [],
+            _lang_Words: [],
+        };
+
+// Neue Sprache hinzufügen
         const handleAddNewLanguage = () => {
             if (choosenLanguage.value === '') {
                 errorMessage.value = 'Bitte eine Sprache auswählen!';
                 isError.value = true;
             } else {
                 // Todo Sprachpaket abspeichern
-                console.log(`${choosenLanguage.value}`);
-                router.push({name: 'home'});
+                // Überprüfen, ob bereits vorhanden
+                if (isNewLanguage(choosenLanguage.value) === true) {
+                    const newLang = {
+                        name: choosenLanguage.value,
+                        wordArr: [],
+                    };
+                    myLanguages.push(newLang);
+                    save_Data_into_LocalStorage();
+                    router.push({name: 'home'});
+                }else{
+                    errorMessage.value = 'Sprache ist bereits vorhanden!';
+                    isError.value = true;
+                }
             }
         };
 
+        const isNewLanguage = (langName) => {
+            for(let i = 0; i < myLanguages.length; i++) {
+                if(myLanguages[i].name === langName) {
+                    return false
+                }
+            }
+            return true
+        }
+
         const hideError = () => {
             isError.value = false;
-        }
+        };
+
+        //#######################################################
+        //              ***** LocalStorage *****
+        // Später sollen nur noch Theme und kleinere, unwichtige
+        // Settings hierüber abgespeichert werden
+        //#######################################################
+        // Save Data from LocalStorage
+        const save_Data_into_LocalStorage = () => {
+            storedObj._myLanguages = myLanguages;
+            // storedObj._myLanguages.push(myLanguages);
+            localStorage.setItem('stored_VocData', JSON.stringify(storedObj));
+            // console.log('Gesp: ', storedObj);
+        };
+        // Load Data into LocalStorage
+        const load_Data_from_LocalStorage = () => {
+            // Check ob Daten im LocalStorage vorhanden sind
+            if (localStorage.getItem('stored_VocData') !== null) {
+                // Hauptobj befüllen
+                storedObj = JSON.parse(localStorage.getItem('stored_VocData'));
+                // console.log('Speicherobj befüllt', storedObj);
+                // abgespeicherte Sprachpakete befüllen
+                if (storedObj._myLanguages !== null) {
+                    myLanguages = [];
+                    myLanguages = storedObj._myLanguages;
+                    // console.log('Sprachpaket befüllt', myLanguages);
+                }
+            } else {
+                // console.warn('Keine Daten vorh');
+            }
+        };
+
+        load_Data_from_LocalStorage();
+
+        //#######################################################
 
         return {
             languagePack,
@@ -65,7 +125,7 @@ export default {
             isError,
             choosenLanguage,
             errorMessage,
-            hideError
+            hideError,
         };
     },
 };

@@ -1,42 +1,76 @@
 <template>
-  <div class="home">
-    <nav>
-      <router-link to="/AddNewLanguage">Neue Sprache +</router-link>
-    </nav>
-    <hr />
-    <LangContainer :testLanguages="testLanguages" />
-  </div>
+    <div class="home">
+        <nav>
+            <router-link to="/AddNewLanguage">Neue Sprache +</router-link>
+        </nav>
+        <hr />
+        <!-- <div v-if="outputLangPacks.length"> -->
+           <LangContainer :outputLangPacks="outputLangPacks" />
+        <!-- </div> -->
+    </div>
 </template>
 
 <script>
-import Header from "../components/Header.vue";
-import LangContainer from "../components/LangContainer";
+import { ref } from '@vue/reactivity';
+import Header from '../components/Header.vue';
+import LangContainer from '../components/LangContainer';
 export default {
-  name: "HomeView",
-  components: {
-    Header,
-    LangContainer
-  },
-  data() {
-    return {
-      testLanguages: ["Englisch", "Spanisch", "Italienisch"]
-    };
-  }
+    name: 'HomeView',
+    components: {
+        Header,
+        LangContainer,
+    },
+    setup() {
+        let myLanguages = [];
+        let storedObj = {
+            _myLanguages: [],
+            _lang_Words: [],
+        };
+        let outputLangPacks = ref([])
+
+        //#######################################################
+        //              ***** LocalStorage *****
+        // Später sollen nur noch Theme und kleinere, unwichtige
+        // Settings hierüber abgespeichert werden
+        //#######################################################
+        // Load Data into LocalStorage
+        const load_Data_from_LocalStorage = () => {
+            // Check ob Daten im LocalStorage vorhanden sind
+            if (localStorage.getItem('stored_VocData') !== null) {
+                // Hauptobj befüllen
+                storedObj = JSON.parse(localStorage.getItem('stored_VocData'));
+                // abgespeicherte Sprachpakete befüllen
+                if (storedObj._myLanguages !== null) {
+                    myLanguages = [];
+                    myLanguages = storedObj._myLanguages;
+                    for(let i = 0; i < myLanguages.length; i++) {
+                      outputLangPacks.value.push(myLanguages[i].name)
+                    }
+                }
+            }
+        };
+
+        load_Data_from_LocalStorage();
+
+        //#######################################################
+
+        return {outputLangPacks}
+    },
 };
 </script>
 
 <style lang="scss">
 nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    background: #15b32a;
-    padding: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 5px 5px 15px black, inset 3px 3px 5px white;
-    border: 1px solid gray;
-  }
+    padding: 30px;
+    a {
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        background: #15b32a;
+        padding: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 5px 5px 15px black, inset 3px 3px 5px white;
+        border: 1px solid gray;
+    }
 }
 </style>
