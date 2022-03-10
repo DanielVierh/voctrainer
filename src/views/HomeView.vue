@@ -4,9 +4,7 @@
             <router-link to="/AddNewLanguage">Neue Sprache +</router-link>
         </nav>
         <hr />
-        <!-- <div v-if="outputLangPacks.length"> -->
-           <LangContainer :outputLangPacks="outputLangPacks" />
-        <!-- </div> -->
+           <LangContainer :myLanguages="myLanguages" />
     </div>
 </template>
 
@@ -21,12 +19,11 @@ export default {
         LangContainer,
     },
     setup() {
-        let myLanguages = [];
+        let myLanguages = ref([]);
         let storedObj = {
             _Theme: 'light',
             _myLanguages: [],
         };
-        let outputLangPacks = ref([])
 
         //#######################################################
         //              ***** LocalStorage *****
@@ -44,9 +41,6 @@ export default {
                 if (storedObj._myLanguages !== null) {
                     myLanguages = [];
                     myLanguages = storedObj._myLanguages;
-                    for(let i = 0; i < myLanguages.length; i++) {
-                      outputLangPacks.value.push(myLanguages[i].name)
-                    }
                 }
             }
         };
@@ -55,7 +49,7 @@ export default {
 
         //#######################################################
 
-        return {outputLangPacks}
+        return {myLanguages}
     },
 };
 </script>

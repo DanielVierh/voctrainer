@@ -1,8 +1,8 @@
 <template>
     <div v-if="languages.length" class="buttonContainer">
-        <div v-for="lang in languages" :key="lang">
+        <div v-for="lang in languages" :key="lang.id">
             <router-link to="/LangOverview">
-                <p class="languageButton">{{ lang }}</p>
+                <p class="languageButton">{{ lang.name }}</p>
             </router-link>
         </div>
     </div>
@@ -11,10 +11,10 @@
 <script>
 import {ref} from 'vue';
 export default {
-    props: ['outputLangPacks'],
+    props: ['myLanguages'],
 
     setup(props) {
-        const languages = ref(props.outputLangPacks);
+        const languages = ref(props.myLanguages);
 
         return {languages};
     },
