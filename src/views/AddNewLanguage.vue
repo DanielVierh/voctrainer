@@ -45,8 +45,8 @@ export default {
 
         let myLanguages = [];
         let storedObj = {
+            _Theme: 'light',
             _myLanguages: [],
-            _lang_Words: [],
         };
 
 // Neue Sprache hinzufügen
@@ -55,10 +55,10 @@ export default {
                 errorMessage.value = 'Bitte eine Sprache auswählen!';
                 isError.value = true;
             } else {
-                // Todo Sprachpaket abspeichern
                 // Überprüfen, ob bereits vorhanden
                 if (isNewLanguage(choosenLanguage.value) === true) {
                     const newLang = {
+                        id: Math.random() * 600,
                         name: choosenLanguage.value,
                         wordArr: [],
                     };
@@ -93,7 +93,6 @@ export default {
         // Save Data from LocalStorage
         const save_Data_into_LocalStorage = () => {
             storedObj._myLanguages = myLanguages;
-            // storedObj._myLanguages.push(myLanguages);
             localStorage.setItem('stored_VocData', JSON.stringify(storedObj));
             // console.log('Gesp: ', storedObj);
         };

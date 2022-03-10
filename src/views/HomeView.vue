@@ -23,8 +23,8 @@ export default {
     setup() {
         let myLanguages = [];
         let storedObj = {
+            _Theme: 'light',
             _myLanguages: [],
-            _lang_Words: [],
         };
         let outputLangPacks = ref([])
 
@@ -39,6 +39,7 @@ export default {
             if (localStorage.getItem('stored_VocData') !== null) {
                 // Hauptobj befüllen
                 storedObj = JSON.parse(localStorage.getItem('stored_VocData'));
+                console.log('Speicherobj befüllt', storedObj);
                 // abgespeicherte Sprachpakete befüllen
                 if (storedObj._myLanguages !== null) {
                     myLanguages = [];
